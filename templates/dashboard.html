@@ -10,8 +10,17 @@
 
 {% for campaign in campaigns %}
 <div class="card">
-    
-    <!-- Hridoy er part -->
+    <h3>
+        <!--  [Hridoy] - Campaign title links to the detail page -->
+        <a href="{{ url_for('campaign_details_route', id=campaign.id) }}">{{ campaign.title }}</a>
+    </h3>
+
+    <!-- [Hridoy] - Show current campaign status (pending/approved/rejected/cancelled/completed) -->
+    <!-- [Hridoy] - "rejected" status displayed here when admin rejects -->
+    <p>Status: {{ campaign.status }}</p>
+
+    <p>Goal: ৳ {{ campaign.goal_amount }}</p>
+    <p>Category: {{ campaign.category }}</p>
 
     <!-- [Siam] - Edit and cancel only available while campaign is still pending -->
     {% if campaign.status == "pending" %}

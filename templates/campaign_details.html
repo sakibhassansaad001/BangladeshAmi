@@ -1,0 +1,45 @@
+<!-- [Hridoy] - Supporting information (updates) posted by the creator are shown here -->
+<!-- [Hridoy] - Campaign status is visible on this page -->
+<!-- [Hridoy] - This page is accessible for approved campaigns -->
+
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+    <h2>{{ campaign.title }}</h2>
+
+    <p><strong>Category:</strong> {{ campaign.category }}</p>
+    <p><strong>Status:</strong> {{ campaign.status }}</p>   <!--  [Hridoy] - Show campaign status to creator -->
+    <p><strong>Goal:</strong> ৳ {{ campaign.goal_amount }}</p>
+    <p><strong>Duration:</strong> {{ campaign.duration }} days</p>
+    <hr>
+    <p>{{ campaign.description }}</p>
+</div>
+
+<hr>
+
+<h3>Campaign Updates / Supporting Information</h3>
+
+<!-- [Hridoy] - Supporting info form is only visible to the campaign creator -->
+{% if current_user.is_authenticated and campaign.user_id == current_user.id %}
+<div class="card">
+    <form action="/campaign/{{ campaign.id }}/update" method="POST">
+        <textarea name="content" placeholder="Attach a brief plan or budget summary for contributors..." required></textarea>  <!--  [Hridoy] - Supporting info input -->
+        <button type="submit">Post Update</button>  <!-- [Hridoy] - Submit the supporting information -->
+    </form>
+</div>
+{% endif %}
+
+<!--[Hridoy] - Display all supporting information/updates posted by the creator -->
+{% if updates %}
+    {% for update in updates %}
+    <div class="card">
+        <p>{{ update.content }}</p>  <!-- [Hridoy] - Show supporting info content -->
+        <small>Posted on {{ update.created_at.strftime('%Y-%m-%d %H:%M') }}</small>  <!-- [Hridoy] - Show timestamp -->
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No supporting information posted yet.</p>  <!-- [Hridoy] - Fallback when no updates exist -->
+{% endif %}
+
+{% endblock %}

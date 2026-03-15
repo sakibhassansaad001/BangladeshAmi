@@ -155,6 +155,48 @@ def reject(id):
         db.session.commit()
     return redirect(url_for('admin_dashboard'))
 
+# [Hridoy] - User tar nijer sob campaign er status dekhe ekhane
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    my_campaigns = Campaign.query.filter_by(user_id=current_user.id).all()  # [Hridoy] - Current user er sob campaign fetch kora hocche
+    return render_template("dashboard.html", campaigns=my_campaigns)
+
+
+# [Hridoy] - Supporting information (brief plan ba budget summary) dekha jay ekhane
+# [Hridoy] - Campaign er status detail page e visible
+def campaign_details(id):
+    campaign = Campaign.query.get_or_404(id)
+    updates = CampaignUpdate.query.filter_by(campaign_id=id).order_by(CampaignUpdate.created_at.desc()).all()  # [Hridoy] - Ei campaign er sob supporting info/updates fetch kora hocche
+    return render_template("campaign_details.html", campaign=campaign, updates=updates)
+
+@app.route('/campaign/<int:id>')
+def campaign_details_route(id):
+    return campaign_details(id)
+
+
+# [Hridoy] - Campaign creator supporting information post korte parbe (brief plan ba budget summary)
+@app.route('/campaign/<int:id>/update', methods=['POST'])
+@login_required
+def add_update(id):
+    campaign = Campaign.query.get_or_404(id)
+
+    # [Hridoy] - Sudhu campaign creator supporting information attach korte parbe
+    if campaign.user_id != current_user.id:
+        return redirect(url_for('campaign_details_route', id=id))
+
+    content = request.form['content']  # [Hridoy] - Form theke supporting info er content newa hocche
+
+    update = CampaignUpdate(
+        content=content,        # [Hridoy] - Supporting information store kora hocche
+        campaign_id=id,
+        user_id=current_user.id
+    )
+    db.session.add(update)
+    db.session.commit()
+    return redirect(url_for('campaign_details_route', id=id))
+
+
 
 if __name__ == "__main__":
     with app.app_context():

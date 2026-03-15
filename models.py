@@ -15,3 +15,17 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(200))
     university_name = db.Column(db.String(200))
     role = db.Column(db.String(20), default="user")  # [Saad] Leader - Role field to distinguish admin from regular user
+
+# [Siam] - Campaign model storing all essential campaign details
+# [Siam] - status defaults to "pending" so all new campaigns go to admin review queue
+class Campaign(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200))                    #[Siam] - Campaign title
+    description = db.Column(db.Text)                     #[Siam] - Purpose and description
+    goal_amount = db.Column(db.Float)                    #[Siam] - Funding goal amount
+    current_amount = db.Column(db.Float, default=0)      #[Siam] - Tracks total raised 
+    duration = db.Column(db.Integer)                     #[Siam] - Campaign duration
+    category = db.Column(db.String(100))                 #[Siam] - Campaign category
+    status = db.Column(db.String(20), default="pending") #[Siam] - Defaults to pending for admin queue;
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)

@@ -16,9 +16,18 @@
     <p><strong>Category:</strong> {{ campaign.category }}</p>
     <p><strong>Duration:</strong> {{ campaign.duration }} days</p>
 
- 
+    <!-- [Siam] - Approve button -->
     
-</div>
+    <a href="/approve/{{ campaign.id }}">
+        <button>Approve</button>
+    </a>
+
+    <!-- [Siam] - Reject button -->
+    
+    <a href="/reject/{{ campaign.id }}">
+        <button style="background:red;">Reject</button>
+    </a>
+ </div>
 {% endfor %}
 
 {% endblock %}

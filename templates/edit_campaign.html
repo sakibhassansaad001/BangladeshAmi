@@ -5,5 +5,13 @@
 
 <h2>Edit Campaign</h2> <!-- [Saad] -->
 
+<form method="POST">
+    <input type="text" name="title" value="{{ campaign.title }}" required>                <!-- [Siam] - Editable title field -->
+    <textarea name="description" required>{{ campaign.description }}</textarea>            <!-- [Siam] - Editable description field -->
+    <input type="number" name="goal" value="{{ campaign.goal_amount }}" required>         <!-- [Siam] - Editable goal amount field -->
+    <input type="number" name="duration" value="{{ campaign.duration }}" required>        <!-- [Siam] - Editable duration field -->
+    <input type="text" name="category" value="{{ campaign.category }}" required>          <!-- [Siam] - Editable category field -->
+    <button type="submit">Update Campaign</button>                                         <!-- [Siam] - Submit the edits -->
+</form>
 
 {% endblock %}

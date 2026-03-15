@@ -8,7 +8,21 @@
 <h2>My Campaigns</h2>
 <a href="/create"><button>Create Campaign</button></a>  <!-- [Saad] - Button to go create a new campaign -->
 
+{% for campaign in campaigns %}
+<div class="card">
+    
+    <!-- Hridoy er part -->
 
+    <!-- [Siam] - Edit and cancel only available while campaign is still pending -->
+    {% if campaign.status == "pending" %}
+        <a href="/edit/{{ campaign.id }}">
+            <button>Edit</button>    <!-- [Siam] - Edit button -->
+        </a>
+        <a href="/cancel/{{ campaign.id }}">
+            <button>Cancel</button>  <!-- [Siam] - Cancel button -->
+        </a>
+    {% endif %}
+</div>
 {% endfor %}
 
 {% endblock %}

@@ -98,6 +98,62 @@ def admin_dashboard():
     return render_template("admin_dashboard.html", campaigns=campaigns)
 
 
+# [Siam] - Campaign creator approve deoar age campaign edit korte parbe
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_campaign(id):
+    campaign = Campaign.query.get_or_404(id)
+
+    # [Siam] - Sudhu owner edit korte pabe, ar campaign ta pending thakte hobe
+    if campaign.user_id != current_user.id or campaign.status != "pending":
+        return redirect(url_for('dashboard'))
+
+    if request.method == 'POST':
+        campaign.title = request.form['title']               # [Siam] - Title update kora hocche
+        campaign.description = request.form['description']   # [Siam] - Description update kora hocche
+        campaign.goal_amount = request.form['goal']          # [Siam] - Goal amount update kora hocche
+        campaign.duration = request.form['duration']         # [Siam] - Duration update kora hocche
+        campaign.category = request.form['category']         # [Siam] - Category update kora hocche
+        db.session.commit()
+        return redirect(url_for('dashboard'))
+
+    return render_template("edit_campaign.html", campaign=campaign)
+
+
+# [Siam] - Campaign creator approve hওয়ার age campaign cancel korte parbe
+@app.route('/cancel/<int:id>')
+@login_required
+def cancel_campaign(id):
+    campaign = Campaign.query.get_or_404(id)
+
+    # [Siam] - Sudhu owner cancel korte pabe, ar campaign ta pending thakte hobe
+    if campaign.user_id == current_user.id and campaign.status == "pending":
+        campaign.status = "cancelled"  # [Siam] - Status cancelled kora holo
+        db.session.commit()
+
+    return redirect(url_for('dashboard'))
+
+
+# [Siam] - Admin campaign approve korte parbe
+@app.route('/approve/<int:id>')
+@login_required
+def approve(id):
+    if current_user.role == "admin":
+        campaign = Campaign.query.get(id)
+        campaign.status = "approved"  # [Siam] - Status approved kora holo;
+        db.session.commit()
+    return redirect(url_for('admin_dashboard'))
+
+
+# [Siam] - Admin campaign reject korte parbe
+@app.route('/reject/<int:id>')
+@login_required
+def reject(id):
+    if current_user.role == "admin":
+        campaign = Campaign.query.get(id)
+        campaign.status = "rejected"  # [Siam] - Status rejected kora holo;
+        db.session.commit()
+    return redirect(url_for('admin_dashboard'))
 
 
 if __name__ == "__main__":

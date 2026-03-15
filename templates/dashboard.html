@@ -1,0 +1,14 @@
+<!-- [Hridoy] - Users can view the status of all their campaigns -->
+<!-- [Siam] - Edit and cancel buttons shown only for pending campaigns -->
+<!-- [Hridoy] - Rejected status is visible to the creator here -->
+
+{% extends "base.html" %}
+{% block content %}
+
+<h2>My Campaigns</h2>
+<a href="/create"><button>Create Campaign</button></a>  <!-- [Saad] - Button to go create a new campaign -->
+
+
+{% endfor %}
+
+{% endblock %}

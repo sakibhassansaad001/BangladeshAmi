@@ -1,0 +1,24 @@
+<!-- [Saad] - Admin review queue showing all pending campaigns -->
+<!-- [Saad] - Admin can view campaign details and submitted information -->
+<!-- [Siam] - Admin can approve or reject campaigns from here -->
+
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Pending Campaigns (Admin Panel)</h2>  <!-- [Saad] - Admin review queue header -->
+
+{% for campaign in campaigns %}
+<div class="card">
+    <!-- [Saad] - Display full campaign details for admin review -->
+    <h3>{{ campaign.title }}</h3>
+    <p>{{ campaign.description }}</p>
+    <p><strong>Goal:</strong> ৳ {{ campaign.goal_amount }}</p>
+    <p><strong>Category:</strong> {{ campaign.category }}</p>
+    <p><strong>Duration:</strong> {{ campaign.duration }} days</p>
+
+ 
+    
+</div>
+{% endfor %}
+
+{% endblock %}

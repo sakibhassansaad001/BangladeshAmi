@@ -1,0 +1,16 @@
+<!-- [Saad] - Creates signup template as part of the main auth flow -->
+
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Sign Up</h2>
+
+<form method="POST">
+    <input type="text" name="name" placeholder="Full Name" required>           <!-- [Saad] - Full name field -->
+    <input type="text" name="university" placeholder="University Name" required> <!-- [Saad]  - University name field -->
+    <input type="email" name="email" placeholder="Email" required>              <!-- [Saad]  - Email field -->
+    <input type="password" name="password" placeholder="Password" required>     <!-- [Saad]  - Password field -->
+    <button type="submit">Register</button>                                      <!-- [Saad]  - Submit registration -->
+</form>
+
+{% endblock %}

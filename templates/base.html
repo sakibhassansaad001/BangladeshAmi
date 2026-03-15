@@ -1,0 +1,32 @@
+<!-- [Saad] - Creates this base template first and pushes to GitHub -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BangladeshAmi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>BangladeshAmi</h2>
+    <div>
+        <a href="/">Home</a>
+        {% if current_user.is_authenticated %}
+            <!-- [Saad] - Dashboard and logout links for authenticated users -->
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        {% else %}
+            <!-- [Saad] - Signin and signup links for guests -->
+            <a href="/signin">Sign In</a>
+            <a href="/signup">Sign Up</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

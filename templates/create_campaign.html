@@ -1,0 +1,19 @@
+<!-- [Saad] - Form for creating a campaign with all essential details -->
+<!-- [Saad] - All fields marked required so submission is blocked if any are empty -->
+<!-- [Saad] - On submit, campaign enters admin review queue as "pending" -->
+
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Create Campaign</h2>
+
+<form method="POST">
+    <input type="text" name="title" placeholder="Campaign Title" required>               <!-- [Saad] - Campaign title; Module 1.2 [Saad] - required -->
+    <textarea name="description" placeholder="Campaign Description" required></textarea>  <!-- [Saad] - Purpose and description; Module 1.2 [Saad] - required -->
+    <input type="number" name="goal" placeholder="Goal Amount" required>                 <!-- [Saad] - Funding goal amount; Module 1.2 [Saad] - required -->
+    <input type="number" name="duration" placeholder="Duration (days)" required>         <!-- [Saad] - Campaign duration; Module 1.2 [Saad] - required -->
+    <input type="text" name="category" placeholder="Category (e.g. donation-based, reward-based)" required>  <!--[Saad] - Campaign category; [Saad] - required -->
+    <button type="submit">Submit Campaign</button>  <!-- [Saad] - Submitting sends campaign to admin review queue as "pending" -->
+</form>
+
+{% endblock %}
